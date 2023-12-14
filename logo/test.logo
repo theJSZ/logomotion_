@@ -1,6 +1,0 @@
-to star :argh :perjantai :numero
-output :argh+1+:perjantai+:numero
-end
-
-make "a (star 1 2 3)
-show :a
