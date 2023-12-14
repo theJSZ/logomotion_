@@ -1,25 +1,25 @@
 import unittest
-from entities.ast.statementlist import StatementList
-from code_generator.code_generator import default_code_generator
-from entities.ast.node import Node
-from entities.ast.logocommands import Bye, Make, Move, Show
-from entities.ast.variables import Deref, Float, StringLiteral
-from entities.ast.logocommands import Move
-from entities.ast.operations import RelOp
-from entities.ast.variables import Float
-from entities.ast.variables import StringLiteral
-from entities.ast.operations import BinOp
-from entities.ast.operations import RelOp
-from entities.ast.operations import UnaryOp
-from entities.ast.conditionals import If
-from entities.ast.unknown_function import UnknownFunction
-from entities.ast.functions import ProcCall, ProcDecl, ProcArgs, ProcArg
-from entities.logotypes import LogoType
-from entities.symbol import Function, Variable
-from entities.type import Type
-from lexer.token_types import TokenType
-from entities.symbol_table import default_variable_table, default_function_table
-from entities.preconfigured_functions import initialize_logo_functions
+from ..entities.ast.statementlist import StatementList
+from ..code_generator.code_generator import default_code_generator
+from ..entities.ast.node import Node
+from ..entities.ast.logocommands import Bye, Make, Move, Show
+from ..entities.ast.variables import Deref, Float, StringLiteral
+from ..entities.ast.logocommands import Move
+from ..entities.ast.operations import RelOp
+from ..entities.ast.variables import Float
+from ..entities.ast.variables import StringLiteral
+from ..entities.ast.operations import BinOp
+from ..entities.ast.operations import RelOp
+from ..entities.ast.operations import UnaryOp
+from ..entities.ast.conditionals import If
+from ..entities.ast.unknown_function import UnknownFunction
+from ..entities.ast.functions import ProcCall, ProcDecl, ProcArgs, ProcArg
+from ..entities.logotypes import LogoType
+from ..entities.symbol import Function, Variable
+from ..entities.type import Type
+from ..lexer.token_types import TokenType
+from ..entities.symbol_table import default_variable_table, default_function_table
+from ..entities.preconfigured_functions import initialize_logo_functions
 
 
 class CodegenTest(unittest.TestCase):
@@ -107,7 +107,7 @@ class CodegenTest(unittest.TestCase):
         self.assertEqual("var var2 = temp1;", code_list[1])
         self.assertEqual("DoubleVariable temp3 = new DoubleVariable(4);", code_list[2])
         self.assertEqual("var2.value = temp3.value;", code_list[3])
-    
+
     def test_for_make(self):
         node_str = StringLiteral(leaf="yksi")
         node_float_start = Float(leaf=0)
@@ -116,9 +116,13 @@ class CodegenTest(unittest.TestCase):
         node_str_2 = StringLiteral(leaf="kaksi")
         node_float_yksi = Float(leaf=1)
         node_make_a = Make(leaf=node_str_2, children=[node_float_yksi])
-        node_nameless = UnknownFunction(children=[StatementList(children=[node_make_a])], iter_param=node_str)
-        node_proccall = ProcCall(leaf="for", children=[node_str, node_float_start, \
-            node_float_limit, node_float_step, node_nameless])
+        node_nameless = UnknownFunction(
+            children=[StatementList(children=[node_make_a])], iter_param=node_str
+        )
+        node_proccall = ProcCall(
+            leaf="for",
+            children=[node_str, node_float_start, node_float_limit, node_float_step, node_nameless],
+        )
         nodes = StatementList(children=[node_proccall])
         nodes.check_types()
         nodes.generate_code()
@@ -131,8 +135,7 @@ class CodegenTest(unittest.TestCase):
         self.assertEqual("DoubleVariable temp6 = new DoubleVariable(1);", code_list[5])
         self.assertEqual("var var7 = temp6;", code_list[6])
         self.assertEqual("this.func9(temp1, temp2, temp3, temp4, temp8);", code_list[11])
-        
-    
+
     def test_binop(self):
         node_float1 = Float(leaf=1)
         node_float2 = Float(leaf=2)
@@ -141,7 +144,9 @@ class CodegenTest(unittest.TestCase):
         node_list = default_code_generator.get_generated_code()
         self.assertEqual("DoubleVariable temp1 = new DoubleVariable(1);", node_list[0])
         self.assertEqual("DoubleVariable temp2 = new DoubleVariable(2);", node_list[1])
-        self.assertEqual("DoubleVariable temp3 = new DoubleVariable(temp1.value + temp2.value);", node_list[2])
+        self.assertEqual(
+            "DoubleVariable temp3 = new DoubleVariable(temp1.value + temp2.value);", node_list[2]
+        )
 
     def test_unop(self):
         node_float = Float(leaf=1)
@@ -159,7 +164,9 @@ class CodegenTest(unittest.TestCase):
         node_list = default_code_generator.get_generated_code()
         self.assertEqual("DoubleVariable temp1 = new DoubleVariable(1);", node_list[0])
         self.assertEqual("DoubleVariable temp2 = new DoubleVariable(1);", node_list[1])
-        self.assertEqual("BoolVariable temp3 = new BoolVariable(temp1.value == temp2.value);", node_list[2])
+        self.assertEqual(
+            "BoolVariable temp3 = new BoolVariable(temp1.value == temp2.value);", node_list[2]
+        )
 
     def test_boolean_string(self):
         node_string1 = StringLiteral(leaf="sana")
@@ -169,7 +176,9 @@ class CodegenTest(unittest.TestCase):
         node_list = default_code_generator.get_generated_code()
         self.assertEqual('StrVariable temp1 = new StrVariable("sana");', node_list[0])
         self.assertEqual('StrVariable temp2 = new StrVariable("anas");', node_list[1])
-        self.assertEqual("BoolVariable temp3 = new BoolVariable(temp1.value != temp2.value);", node_list[2])
+        self.assertEqual(
+            "BoolVariable temp3 = new BoolVariable(temp1.value != temp2.value);", node_list[2]
+        )
 
     def test_void_function_call(self):
         node_function = ProcCall(leaf="test", children=None)
@@ -220,7 +229,7 @@ class CodegenTest(unittest.TestCase):
         node_list = default_code_generator.get_generated_code()
         self.assertEqual("DoubleVariable temp1 = new DoubleVariable(4.2);", node_list[0])
         self.assertEqual("System.out.println(temp1.value);", node_list[1])
-        self.assertEqual("StrVariable temp2 = new StrVariable(\"kissa\");", node_list[2])
+        self.assertEqual('StrVariable temp2 = new StrVariable("kissa");', node_list[2])
         self.assertEqual("System.out.println(temp2.value);", node_list[3])
 
     def test_bye(self):

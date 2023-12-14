@@ -1,7 +1,7 @@
-from entities.ast.functions import ProcCall
-from entities.ast.node import Node
-from entities.ast.variables import Deref
-from entities.logotypes import LogoType
+from .functions import ProcCall
+from .node import Node
+from .variables import Deref
+from ..logotypes import LogoType
 
 
 class BinOp(Node):
@@ -24,8 +24,8 @@ class BinOp(Node):
 
             if child.get_logotype() != LogoType.FLOAT:
                 self._logger.error_handler.add_error(
-                    "binop_error_when_operand_is_not_float",
-                    self.position.get_lexspan())
+                    "binop_error_when_operand_is_not_float", self.position.get_lexspan()
+                )
 
     def generate_code(self):
         """Generate binop to java"""
@@ -114,8 +114,8 @@ class RelOp(Node):
                 and child2.get_logotype() == LogoType.UNKNOWN
             ):
                 self._logger.error_handler.add_error(
-                    "unknown_types_when_comparing_with_equals",
-                    self.position.get_lexspan())
+                    "unknown_types_when_comparing_with_equals", self.position.get_lexspan()
+                )
                 return
 
         # <, >, <= and >= can only be used with type FLOAT

@@ -1,4 +1,4 @@
-from entities.ast.node import Node
+from .node import Node
 
 
 class StatementList(Node):

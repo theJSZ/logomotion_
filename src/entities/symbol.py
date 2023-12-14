@@ -1,5 +1,5 @@
 """symbol module"""
-from entities.type import Type
+from .type import Type
 
 
 class Symbol:

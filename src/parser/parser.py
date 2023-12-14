@@ -77,24 +77,25 @@ list
 """
 
 
-from parser.globals import *
-from parser.command import *
-from parser.expression import *
-from parser.preparser import Preparser
-from ply import yacc
-from lexer.lexer import Lexer
-from code_generator.code_generator import default_code_generator
-from utils.logger import default_logger
-from entities.symbol_tables import default_symbol_tables
+from .globals import *
+from .command import *
+from .expression import *
+from .preparser import Preparser
 
-from entities.ast.node import *
-from entities.ast.conditionals import *
-from entities.ast.functions import *
-from entities.ast.logocommands import *
-from entities.ast.operations import *
-from entities.ast.statementlist import *
-from entities.ast.variables import *
-from entities.ast.unknown_function import *
+from ..ply import yacc
+from ..lexer.lexer import Lexer
+from ..code_generator.code_generator import default_code_generator
+from ..utils.logger import default_logger
+from ..entities.symbol_tables import default_symbol_tables
+
+from ..entities.ast.conditionals import *
+from ..entities.ast.node import *
+from ..entities.ast.functions import *
+from ..entities.ast.logocommands import *
+from ..entities.ast.operations import *
+from ..entities.ast.statementlist import *
+from ..entities.ast.variables import *
+from ..entities.ast.unknown_function import *
 
 
 def p_start(prod):

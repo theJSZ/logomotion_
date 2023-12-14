@@ -1,15 +1,15 @@
 # pylint: disable=unused-argument,wildcard-import,unused-wildcard-import,line-too-long
 """ Command production rules
 """
-from parser.globals import *
-from entities.ast.conditionals import *
-from entities.ast.functions import *
-from entities.ast.logocommands import *
-from entities.ast.operations import *
-from entities.ast.statementlist import *
-from entities.ast.variables import *
-from entities.ast.unknown_function import *
-from lexer.token_types import TokenType
+from .globals import *
+from ..entities.ast.conditionals import *
+from ..entities.ast.functions import *
+from ..entities.ast.logocommands import *
+from ..entities.ast.operations import *
+from ..entities.ast.statementlist import *
+from ..entities.ast.variables import *
+from ..entities.ast.unknown_function import *
+from ..lexer.token_types import TokenType
 
 
 def p_statement(prod):
@@ -186,32 +186,25 @@ def p_proc_call(prod):
         position=Position(prod),
     )
 
-def p_for_call(prod): #for ["i 1 2 3] {}
+
+def p_for_call(prod):  # for ["i 1 2 3] {}
     "proc_call : FOR LBRACKET expressions RBRACKET unknown_function"
-    vnode = shared.node_factory.create_node(
-            VariableNode,
-            leaf=prod[3][0],
-            position=Position(prod)
-            )
+    vnode = shared.node_factory.create_node(VariableNode, leaf=prod[3][0], position=Position(prod))
     unf = prod[5]
     unf.var_node = vnode
     prod[0] = shared.node_factory.create_node(
-        ProcCall,
-        children=[vnode] + prod[3][1:] + [unf],
-        leaf="for",
-        position=Position(prod)
+        ProcCall, children=[vnode] + prod[3][1:] + [unf], leaf="for", position=Position(prod)
     )
+
 
 def p_repeat_call(prod):
     "proc_call : REPEAT expression expression"
     unf = prod[3]
     unf.arg_type = LogoType.VOID
     prod[0] = shared.node_factory.create_node(
-        ProcCall,
-        children=[prod[2]] + [unf],
-        leaf = "repeat",
-        position=Position(prod)
+        ProcCall, children=[prod[2]] + [unf], leaf="repeat", position=Position(prod)
     )
+
 
 def p_bye(prod):
     "bye : BYE"

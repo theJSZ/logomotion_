@@ -1,11 +1,13 @@
-from entities.ast.node import Node
-from entities.logotypes import LogoType
+from .node import Node
+from ..logotypes import LogoType
+
 
 class UnknownFunction(Node):
     """
     Args:
         var_node: This is the iterator for 'for' command structure
     """
+
     def __init__(self, children=None, **dependencies):
         super().__init__("UnknownFunction", children, None, **dependencies)
         self.var_node = None

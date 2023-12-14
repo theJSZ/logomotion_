@@ -1,6 +1,6 @@
 """Module for console printing and error handling."""
-from utils.console_io import default_console_io
-from utils.error_handler import default_error_handler
+from .console_io import default_console_io
+from .error_handler import default_error_handler
 
 
 class Logger:

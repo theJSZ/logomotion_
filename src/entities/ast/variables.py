@@ -1,8 +1,8 @@
-from entities.ast.node import Node
-from entities.logotypes import LogoType
-from entities.symbol import Variable
-from entities.type import Type
-from utils.lowercase_converter import convert_to_lowercase as to_lowercase
+from .node import Node
+from ..logotypes import LogoType
+from ..symbol import Variable
+from ..type import Type
+from ...utils.lowercase_converter import convert_to_lowercase as to_lowercase
 
 
 class Float(Node):

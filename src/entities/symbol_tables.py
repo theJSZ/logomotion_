@@ -1,7 +1,7 @@
 """Module for a class holding both function and variable symbol tables"""
 
-from entities.symbol_table import default_variable_table, default_function_table
-from entities.type import Type
+from .symbol_table import default_variable_table, default_function_table
+from .type import Type
 
 
 class SymbolTables:

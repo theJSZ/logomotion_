@@ -3,12 +3,12 @@ the program code and find TO-function declarations and create grammar rule funct
 from them. These are later added to the parser grammar, so that the user can call
 procedures without parantheses."""
 
-from parser.globals import Position
-from lexer.lexer import Lexer
-from lexer.token_types import TokenType
-from entities.ast.functions import ProcCall
-from entities.ast.node import NodeFactory
-from utils.logger import default_logger
+from .globals import Position
+from ..lexer.lexer import Lexer
+from ..lexer.token_types import TokenType
+from ..entities.ast.functions import ProcCall
+from ..entities.ast.node import NodeFactory
+from ..utils.logger import default_logger
 
 
 class Preparser:

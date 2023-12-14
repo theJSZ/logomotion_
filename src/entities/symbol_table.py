@@ -1,6 +1,6 @@
 """Symbol table module"""
 from collections import deque
-from utils.lowercase_converter import convert_to_lowercase as to_lowercase
+from ..utils.lowercase_converter import convert_to_lowercase as to_lowercase
 
 
 class SymbolTable:

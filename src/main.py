@@ -2,16 +2,26 @@
 """
 import argparse
 import os
-from parser.parser import Parser
+from .parser.parser import Parser
 import dotenv
-from entities.symbol_tables import SymbolTables
-from entities.preconfigured_functions import initialize_logo_functions
-from lexer.lexer import Lexer
-from code_generator.code_generator import JavaCodeGenerator
-from code_generator.preconf_code_generator import JavaPreconfFuncsGenerator
-from utils.console_io import ConsoleIO
-from utils.error_handler import ErrorHandler
-from utils.logger import Logger
+from .entities.symbol_tables import SymbolTables
+from .entities.preconfigured_functions import initialize_logo_functions
+from .lexer.lexer import Lexer
+from .code_generator.code_generator import JavaCodeGenerator
+from .code_generator.preconf_code_generator import JavaPreconfFuncsGenerator
+from .utils.console_io import ConsoleIO
+from .utils.error_handler import ErrorHandler
+from .utils.logger import Logger
+
+# Load variables from .env file
+dotenv.load_dotenv()
+MESSAGE_LANG = os.getenv("MESSAGE_LANG")
+CODE_GEN_LANG = os.getenv("CODE_GEN_LANG")
+
+# Get command line arguments
+args = get_cmd_line_args()
+# Get logo code from file. Filepath is given as a command line argument
+LOGO_CODE = "et 20"  # load_file(args.filepath)
 
 
 def main():
@@ -34,7 +44,7 @@ def main():
                 leftMotor=os.getenv("LEFT_MOTOR_PORT"),
                 rightMotor=os.getenv("RIGHT_MOTOR_PORT"),
                 motorSpeed=os.getenv("MOVEMENT_SPD"),
-                motorRotationSpeed = os.getenv("ROTATION_SPD"),
+                motorRotationSpeed=os.getenv("ROTATION_SPD"),
             )
             return jcg
 
@@ -83,8 +93,8 @@ def main():
     compile_logo()
 
 
-if __name__ == "__main__":
-
+# if __name__ == "__main__":
+def logo():
     def get_cmd_line_args():
         arg_parser = argparse.ArgumentParser(
             prog="Logomotion", description="Compile logo to java via python"
@@ -99,16 +109,5 @@ if __name__ == "__main__":
         with open(filename, "r", encoding="utf8") as file:
             content = file.readlines()
         return "".join(content)
-
-    # Load variables from .env file
-    dotenv.load_dotenv()
-    MESSAGE_LANG = os.getenv("MESSAGE_LANG")
-    CODE_GEN_LANG = os.getenv("CODE_GEN_LANG")
-
-    # Get command line arguments
-    args = get_cmd_line_args()
-
-    # Get logo code from file. Filepath is given as a command line argument
-    LOGO_CODE = load_file(args.filepath)
 
     main()

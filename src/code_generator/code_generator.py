@@ -1,14 +1,13 @@
 """Code Generator module"""
 # pylint: disable=too-many-public-methods, too-many-instance-attributes
 import os
-from entities.logotypes import LogoType
-from utils.logger import Logger, default_logger
-from lexer.token_types import TokenType
+from ..entities.logotypes import LogoType
+from ..utils.logger import Logger, default_logger
+from ..lexer.token_types import TokenType
 
 START_METHOD = (
     "package logo; import classes.EV3MovePilot; import java.util.concurrent.Callable; \
     import classes.*;"
-
     "public class Logo { \
         EV3MovePilot robot; \
     public Logo() { \
@@ -16,17 +15,11 @@ START_METHOD = (
     }"
 )
 
-START_RUN = (
-    "public void run() { "
-)
+START_RUN = "public void run() { "
 
 END_RUN = "}"
 
-START_MAIN = (
-    "public static void main(String[] args) { "\
-        "Logo logo = new Logo(); "\
-        "logo.run();"
-)
+START_MAIN = "public static void main(String[] args) { " "Logo logo = new Logo(); " "logo.run();"
 END = "} }"
 DEFAULT_NAME = "Logo"
 PATH = os.path.join(
@@ -37,14 +30,11 @@ JAVA_TYPES = {
     LogoType.STRING: "StrVariable",
     LogoType.BOOL: "BoolVariable",
     LogoType.VOID: "void",
-    LogoType.NAMELESS_FUNCTION: "CallableVariable"
+    LogoType.NAMELESS_FUNCTION: "CallableVariable",
 }
 
-JAVA_TYPES_OBJECTS = {
-    LogoType.FLOAT : "Double",
-    LogoType.STRING : "String",
-    LogoType.BOOL : "Boolean"
-}
+JAVA_TYPES_OBJECTS = {LogoType.FLOAT: "Double", LogoType.STRING: "String", LogoType.BOOL: "Boolean"}
+
 
 class JavaCodeGenerator:
     """A class for generating Java code"""
@@ -115,15 +105,19 @@ class JavaCodeGenerator:
         self._proc_flag = False
 
     def end_try_catch_block_in_procedure(self, logo_func_type):
-        code = "} catch (ReturnException error) { "\
-               f"return ({JAVA_TYPES[logo_func_type]}) error.returnValue;"\
-               "}"
+        code = (
+            "} catch (ReturnException error) { "
+            f"return ({JAVA_TYPES[logo_func_type]}) error.returnValue;"
+            "}"
+        )
         self._append_code(code)
 
     def end_try_catch_block_outside_procedure(self):
-        code = "} catch (ReturnException error) { "\
-               "System.out.println(\"An unidentified error occurred.\");"\
-               "}"
+        code = (
+            "} catch (ReturnException error) { "
+            'System.out.println("An unidentified error occurred.");'
+            "}"
+        )
         self._append_code(code)
 
     def add_function_parameters(self, parameters):
@@ -181,8 +175,10 @@ class JavaCodeGenerator:
         if logo_var_name in self._java_variable_names:
             del self._java_variable_names[logo_var_name]
         else:
-            print("Attempted to remove key that doesn't exist in code_generator,\
-                remove_java_variable_name.")
+            print(
+                "Attempted to remove key that doesn't exist in code_generator,\
+                remove_java_variable_name."
+            )
 
     def create_new_variable(self, logo_var_name, value_name):
         """Create a new Java variable and assign it a value."""
@@ -269,7 +265,7 @@ class JavaCodeGenerator:
     def binop(self, value1, value2, operation):
         """create java code for binops and return variable name"""
         temp_var = self._generate_temp_var()
-        #pylint: disable=c0301
+        # pylint: disable=c0301
         code = f"DoubleVariable {temp_var} = new DoubleVariable({value1}.value {operation} {value2}.value);"
         self._append_code(code)
         return temp_var
@@ -392,7 +388,8 @@ class JavaCodeGenerator:
             else:
                 new_line = f"\t\t{search_key}{value};\n"
             params = list(
-                map(lambda x: x.replace(line_to_modify, new_line), params))  # pylint: disable=W0640
+                map(lambda x: x.replace(line_to_modify, new_line), params)
+            )  # pylint: disable=W0640
         return params
 
     def _write_new_params_to_file(self, path, param_lines):

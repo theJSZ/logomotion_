@@ -1,12 +1,12 @@
 # pylint: disable=unused-argument,wildcard-import,unused-wildcard-import
 """Expression product rules"""
-from parser.globals import *
-from entities.ast.conditionals import *
-from entities.ast.functions import *
-from entities.ast.logocommands import *
-from entities.ast.operations import *
-from entities.ast.statementlist import *
-from entities.ast.variables import *
+from .globals import *
+from ..entities.ast.conditionals import *
+from ..entities.ast.functions import *
+from ..entities.ast.logocommands import *
+from ..entities.ast.operations import *
+from ..entities.ast.statementlist import *
+from ..entities.ast.variables import *
 
 
 def p_expressions(prod):

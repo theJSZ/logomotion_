@@ -1,10 +1,10 @@
 # pylint disable=fixme
-from entities.ast.node import Node
-from entities.logotypes import LogoType
-from entities.symbol import Function, Variable
-from entities.type import Type
-from entities.ast.variables import Deref
-from utils.lowercase_converter import convert_to_lowercase as to_lowercase
+from .node import Node
+from ..logotypes import LogoType
+from ..symbol import Function, Variable
+from ..type import Type
+from ..ast.variables import Deref
+from ...utils.lowercase_converter import convert_to_lowercase as to_lowercase
 
 
 class Output(Node):
@@ -195,7 +195,9 @@ class ProcCall(Node):
             return temp_var
 
         if self.get_logotype() != LogoType.VOID:
-            temp_var = self._code_generator.returning_function_call(to_lowercase(self.leaf), temp_vars)
+            temp_var = self._code_generator.returning_function_call(
+                to_lowercase(self.leaf), temp_vars
+            )
             return temp_var
 
         self._code_generator.function_call(to_lowercase(self.leaf), temp_vars)
@@ -268,7 +270,7 @@ class ProcDecl(Node):
 
     def _has_unknown_function(self, node):
         """Check if a void type procedure has an unknown function in it.
-           Mark the unknown function's void_parent variable as True if yes"""
+        Mark the unknown function's void_parent variable as True if yes"""
         if to_lowercase(node.leaf) in ["repeat", "for"]:
             node.void_parent = True
         for child in node.children:

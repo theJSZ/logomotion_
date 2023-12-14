@@ -1,9 +1,9 @@
-from entities.ast.node import Node
-from entities.logotypes import LogoType
-from entities.symbol import Variable
-from entities.type import Type
-from lexer.token_types import TokenType
-from utils.lowercase_converter import convert_to_lowercase as to_lowercase
+from .node import Node
+from ..logotypes import LogoType
+from ..symbol import Variable
+from ..type import Type
+from ...lexer.token_types import TokenType
+from ...utils.lowercase_converter import convert_to_lowercase as to_lowercase
 
 
 class Make(Node):
@@ -20,7 +20,7 @@ class Make(Node):
             self._logger.error_handler.add_error(
                 "deref_instead_of_string_literal",
                 lexspan=self.position.get_lexspan(),
-                var_name=variable_node.leaf
+                var_name=variable_node.leaf,
             )
             return
 
@@ -46,7 +46,7 @@ class Make(Node):
             self._logger.error_handler.add_error(
                 "type_cannot_be_assigned_to_a_variable",
                 self.position.get_lexspan(),
-                curr_type=arg_logotype
+                curr_type=arg_logotype,
             )
 
     def _create_new_variable(self, name, logotype):
@@ -176,8 +176,8 @@ class Show(Node):
         # Must have at least 1 argument
         if len(self.children) == 0:
             self._logger.error_handler.add_error(
-                "wrong_amount_of_arguments",
-                self.position.get_lexspan())
+                "wrong_amount_of_arguments", self.position.get_lexspan()
+            )
 
         # Cannot be function call that returns VOID
         for child in self.children:

@@ -1,6 +1,6 @@
-from entities.symbol import Variable, Function
-from entities.type import Type
-from entities.logotypes import LogoType
+from .symbol import Variable, Function
+from .type import Type
+from .logotypes import LogoType
 
 
 def initialize_logo_functions(function_tables):
@@ -13,6 +13,7 @@ def initialize_logo_functions(function_tables):
     function_tables.insert("for", _for())
     function_tables.insert("repeat", _repeat())
     return function_tables
+
 
 def _repeat():
     """Definition for repeat/toista nameless function
@@ -32,6 +33,7 @@ def _repeat():
         typeclass=Type(logotype=LogoType.VOID, functions=set((fname,))),
     )
     return procedure
+
 
 def _for():
     """Definition for 'for' nameless function

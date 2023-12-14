@@ -1,6 +1,6 @@
 """Class that handles typing variables, when there are references to one another"""
 
-from entities.logotypes import LogoType
+from .logotypes import LogoType
 
 
 class Type:
