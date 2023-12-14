@@ -8,7 +8,7 @@ Small changes were also made to how error messages are generated. There were two
 make "a 1
 show "a + 1
 ```
-`"a + 1` will be underlined as erroneus along with a message saying
+`"a + 1` will be underlined as erroneous along with a message saying
 ```
 message: You tried to do a calculation with something that is not a number.
 line: 2
